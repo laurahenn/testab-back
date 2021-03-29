@@ -12,6 +12,7 @@ import equipesRouter from './equipes.routes';
 import equipesUsuariosRouter from './equipesusuarios.routes';
 
 import sessionsRouter from './sessions.routes';
+import getinfosRouter from './sessions.getinfos';
 
 const routes = Router();
 // routes.get('/', (request, response) => response.json({ message: 'Hello World!' }));
@@ -19,6 +20,8 @@ const routes = Router();
 // Rotas publicas
 routes.use('/sessions', sessionsRouter);
 routes.use('/novo-usuario', usuariosnovosRouter);
+
+routes.use('/get-infos', getinfosRouter);
 
 // Rotas autenticadas
 routes.use('/permissoes', permissoesRouter);
