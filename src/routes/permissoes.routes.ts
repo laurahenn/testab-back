@@ -32,10 +32,10 @@ permissoesRouter.delete('/', async (request, response) => {
 
   const permissoesRepository = getCustomRepository(PermissoesRepository);
 
-  const where = {};
-   if (id) where.id = id;
+  // const where = {};
+  //  if (id) where.id = id;
 
-  await permissoesRepository.delete(where);
+  // await permissoesRepository.delete(where);
 
   return response.json({ success: 'Excluído com sucesso!' });
 

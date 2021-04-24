@@ -65,10 +65,10 @@ usuariosRouter.delete('/', async (request, response) => {
 
   const usuarioRepository = getCustomRepository(UsuariosRepository);
 
-  const where = {};
-   if (id) where.id = id;
+  // const where = {};
+  //  if (id) where.id = id;
 
-  await usuarioRepository.delete(where);
+  // await usuarioRepository.delete(where);
 
   return response.json({ success: 'Excluído com sucesso!' });
 });

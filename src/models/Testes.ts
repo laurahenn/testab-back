@@ -26,9 +26,6 @@ class Testes {
   @JoinColumn({ name: 'testeAB_id' })
   testeAB: TestesAB;
 
-  @Column()
-  ativo: boolean;
-
 }
 
 export default Testes;

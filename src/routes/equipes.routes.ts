@@ -34,10 +34,10 @@ equipesRouter.delete('/', async (request, response) => {
 
   const equipeRepository = getCustomRepository(EquipesRepository);
 
-  const where = {};
-   if (id) where.id = id;
+  // const where = {};
+  //  if (id) where.id = id;
 
-  await equipeRepository.delete(where);
+  // await equipeRepository.delete(where);
 
   return response.json({ success: 'Excluído com sucesso!' });
 });

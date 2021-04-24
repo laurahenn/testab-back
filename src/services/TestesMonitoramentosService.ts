@@ -2,24 +2,26 @@ import { getRepository, Timestamp } from 'typeorm'
 import { hash } from 'bcryptjs'
 
 import AppError from '../errors/AppError'
-import Permissoes from '../models/Permissoes';
+import TestesMonitoramentos from '../models/TestesMonitoramentos';
 
 interface Request {
-  titulo: string;
-  admin: boolean;
+  cliques: number;
+  cliques_sucesso: number;
+  teste_id: number;
+  monitoramento_id: number;
 }
 
-class CreatePermissoesService {
-  public async execute({ titulo, admin }: Request): Promise<Permissoes>{
+class CreateTestesMonitoramentosService {
+  public async execute({ cliques, cliques_sucesso, teste_id, monitoramento_id }: Request): Promise<TestesMonitoramentos>{
 
-    const permissoesRepository = getRepository(Permissoes);
+    const testesMonitoramentosRepository = getRepository(TestesMonitoramentos);
 
-    const permissao = permissoesRepository.create({ titulo, admin });
+    const permissao = testesMonitoramentosRepository.create({ cliques, cliques_sucesso, teste_id, monitoramento_id });
 
-    await permissoesRepository.save(permissao);
+    await testesMonitoramentosRepository.save(permissao);
 
     return permissao;
   }
 }
 
-export default CreatePermissoesService;
+export default CreateTestesMonitoramentosService;

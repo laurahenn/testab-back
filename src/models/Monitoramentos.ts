@@ -14,7 +14,7 @@ class Monitoramentos {
   id: number;
 
   @Column()
-  id_monitoramento: string;
+  id_monitorado: string;
 
   @Column()
   formulario: boolean;

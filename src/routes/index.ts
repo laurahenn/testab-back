@@ -14,6 +14,12 @@ import equipesUsuariosRouter from './equipesusuarios.routes';
 import sessionsRouter from './sessions.routes';
 import getinfosRouter from './sessions.getinfos';
 
+// foco
+import testesABRouter from './testesAB.routes';
+import monitoramentosRouter from './monitoramentos.routes';
+import testesRouter from './testes.routes';
+import testesMonitoramentosRouter from './testesmonitoramentos.routes';
+
 const routes = Router();
 // routes.get('/', (request, response) => response.json({ message: 'Hello World!' }));
 
@@ -32,6 +38,12 @@ routes.use('/organizacoes-usuarios', organizacoesUsuariosRouter);
 
 routes.use('/equipes', equipesRouter);
 routes.use('/equipes-usuarios', equipesUsuariosRouter);
+
+// foco
+routes.use('/testesAB', testesABRouter);
+routes.use('/monitoramentos', monitoramentosRouter);
+routes.use('/testes', testesRouter);
+routes.use('/testes-monitoramentos', testesRouter);
 
 
 

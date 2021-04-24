@@ -16,7 +16,7 @@ export class CreateMonitoramentos1617144756951 implements MigrationInterface {
                         generationStrategy: 'increment', // auto increment
                     },
                     {
-                        name: 'id_monitoramento',
+                        name: 'id_monitorado',
                         type: 'varchar',
                         isNullable: false,
                     },

@@ -31,10 +31,10 @@ organizacoesRouter.delete('/', async (request, response) => {
 
   const organizacoesRepository = getCustomRepository(OrganizacoesRepository);
 
-  const where = {};
-   if (id) where.id = id;
+  // const where = {};
+  //  if (id) where.id = id;
 
-  await organizacoesRepository.delete(where);
+  // await organizacoesRepository.delete(where);
 
   return response.json({ success: 'Excluído com sucesso!' });
 });
