@@ -1,17 +1,17 @@
 {
-  "type": "postgres",  
-  "host": "64.227.13.101",
-  "port": 35432,
-  "username": "master",
-  "password": "masterkey",
+  "type": "postgres",
+	"host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "docker",
   "database": "testab",
   "entities": [
-    "./src/models/*.ts"
+		"./src/models/*.ts"
   ],
   "migrations": [
-    "./src/database/migrations/*.ts"
-  ],
-  "cli": {
-    "migrationsDir": "./src/database/migrations"
-  }
+		"./src/database/migrations/*.ts"
+	],
+	"cli": {
+		"migrationsDir": "./src/database/migrations"
+	}
 }

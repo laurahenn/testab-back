@@ -1,37 +1,45 @@
-import { Router } from 'express';
-import { getCustomRepository } from 'typeorm';
+import { Router } from "express";
+import multer from "multer";
+import { getCustomRepository, useContainer } from "typeorm";
+import uploadConfig from "../config/upload";
 
-import CreateUsuariosService from '../services/CreateUsuariosService';
-import UpdateUserService from '../services/UpdateUsuariosService';
-import UsuariosRepository from '../repositories/UsuariosRepository';
+import CreateUsuariosService from "../services/CreateUsuariosService";
+import UpdateUserService from "../services/UpdateUsuariosService";
+import UpdateUserAvatarService from "../services/UpdateUserAvatarService";
+import UsuariosRepository from "../repositories/UsuariosRepository";
 
-import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import ensureAuthenticated from "../middlewares/ensureAuthenticated";
 
 import Mail from "../mail/mail";
 
 const usuariosRouter = Router();
+const upload = multer(uploadConfig);
 
 usuariosRouter.use(ensureAuthenticated);
 
-usuariosRouter.get('/', async (request, response) => {
+usuariosRouter.get("/", async (request, response) => {
   const usuariosRepository = getCustomRepository(UsuariosRepository);
 
   const usuarios = await usuariosRepository.find();
   return response.json(usuarios);
 });
 
-usuariosRouter.post('/', async (request, response) => {
+usuariosRouter.post("/", async (request, response) => {
   try {
-    
     const { nome, email, senha, foto, permissao_id, ativo } = request.body;
 
     const createUser = new CreateUsuariosService();
 
     const usuario = await createUser.execute({
-      nome, email, senha, foto, permissao_id, ativo
+      nome,
+      email,
+      senha,
+      foto,
+      permissao_id,
+      ativo,
     });
 
-    // delete usuario.senha; // ???  
+    // delete usuario.senha; // ???
 
     /* E-MAIL */
     // Mail.to = email;
@@ -45,16 +53,52 @@ usuariosRouter.post('/', async (request, response) => {
   }
 });
 
-usuariosRouter.put('/', async(request, response) => {
-  const { user_id, nome, email, foto, permissao_id, ativo, senha_velha, senha } = request.body;
+usuariosRouter.put("/", async (request, response) => {
+  const {
+    user_id,
+    nome,
+    email,
+    foto,
+    permissao_id,
+    ativo,
+    senha_velha,
+    senha,
+  } = request.body;
 
   const updateUser = new UpdateUserService();
 
   const usuario = await updateUser.execute({
-    user_id, nome, email, foto, permissao_id, ativo, senha_velha, senha
+    user_id,
+    nome,
+    email,
+    foto,
+    permissao_id,
+    ativo,
+    senha_velha,
+    senha,
   });
 
   return response.json(usuario);
 });
+
+usuariosRouter.patch(
+  "/avatar",
+  ensureAuthenticated,
+  upload.single("foto"),
+  async (request, response) => {
+    try {
+      const updateUserAvatar = new UpdateUserAvatarService();
+
+      const user = await updateUserAvatar.execute({
+        user_id: request.user.id,
+        avatarFilename: request.file.filename,
+      });
+
+      return response.json({ user });
+    } catch (error) {
+      return response.status(400).json({ error: error.message });
+    }
+  },
+);
 
 export default usuariosRouter;
