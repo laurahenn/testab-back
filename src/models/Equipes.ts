@@ -7,7 +7,6 @@ import {
 } from "typeorm";
 
 import Organizacoes from '../models/Organizacoes';
-import { id } from "date-fns/locale";
 
 @Entity("equipes")
 class Equipes {

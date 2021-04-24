@@ -1,7 +1,5 @@
-import { getRepository, Timestamp } from 'typeorm'
-import { hash } from 'bcryptjs'
+import { getRepository } from 'typeorm'
 
-import AppError from '../errors/AppError'
 import TestesMonitoramentos from '../models/TestesMonitoramentos';
 
 interface Request {

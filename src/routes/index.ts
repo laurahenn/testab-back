@@ -3,7 +3,6 @@ import { Router } from 'express';
 import permissoesRouter from './permissoes.routes';
 
 import usuariosRouter from './usuarios.routes';
-import usuariosnovosRouter from './usuariosnovos.routes';
 
 import organizacoesRouter from './organizacoes.routes';
 import organizacoesUsuariosRouter from './organizacoesusuarios.routes';
@@ -21,12 +20,9 @@ import testesRouter from './testes.routes';
 import testesMonitoramentosRouter from './testesmonitoramentos.routes';
 
 const routes = Router();
-// routes.get('/', (request, response) => response.json({ message: 'Hello World!' }));
 
 // Rotas publicas
 routes.use('/sessions', sessionsRouter);
-routes.use('/novo-usuario', usuariosnovosRouter);
-
 routes.use('/get-infos', getinfosRouter);
 
 // Rotas autenticadas
@@ -43,8 +39,6 @@ routes.use('/equipes-usuarios', equipesUsuariosRouter);
 routes.use('/testesAB', testesABRouter);
 routes.use('/monitoramentos', monitoramentosRouter);
 routes.use('/testes', testesRouter);
-routes.use('/testes-monitoramentos', testesRouter);
-
-
+routes.use('/testes-monitoramentos', testesMonitoramentosRouter);
 
 export default routes;

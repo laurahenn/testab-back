@@ -1,6 +1,5 @@
 import { getRepository } from 'typeorm'
 
-import AppError from '../errors/AppError'
 import Organizacoes from '../models/Organizacoes';
 
 interface Request {

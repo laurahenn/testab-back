@@ -8,7 +8,6 @@ import {
 
 import Equipes from './Equipes';
 import Usuarios from './Usuarios';
-import { id } from "date-fns/locale";
 
 @Entity("equipes_usuarios")
 class EquipesUsuarios {

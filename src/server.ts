@@ -12,10 +12,6 @@ const app = express();
 
 app.use(cors());
 
-// app.use(cors({
-  // origin: "http://localhost:3000" // futuramente aqui vai o endereço que está executando em produção as requisições pra essa api
-// }));
-
 app.use(express.json());
 app.use(routes);
 

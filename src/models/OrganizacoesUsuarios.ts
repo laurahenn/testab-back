@@ -8,7 +8,6 @@ import {
 
 import Usuarios from '../models/Usuarios';
 import Organizacoes from '../models/Organizacoes';
-import { id } from "date-fns/locale";
 
 @Entity("organizacoes_usuarios")
 class OrganizacoesUsuarios {
