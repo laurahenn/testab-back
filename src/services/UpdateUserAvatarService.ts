@@ -24,11 +24,13 @@ class UpdateUserAvatarService {
     }
 
     if (user.foto) {
-      const userAvatarFilePath = path.join(uploadConfig.directory, user.foto);
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
+      if(user.foto != "perfil.jpg") {
+        const userAvatarFilePath = path.join(uploadConfig.directory, user.foto);
+        const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
 
-      if (userAvatarFileExists) {
-        await fs.promises.unlink(userAvatarFilePath);
+        if (userAvatarFileExists) {
+          await fs.promises.unlink(userAvatarFilePath);
+        }
       }
     }
 
