@@ -51,4 +51,30 @@ testesABRouter.delete('/', async (request, response) => {
   }
 });
 
+testesABRouter.get('/me', async (request, response) => {
+
+  const testesABRepository = getCustomRepository(TestesABRepository);
+
+  const { usuario_id } = request.query;
+
+  const sql = `select t.* from "testesAB" t where ${usuario_id} in (select ou.usuario_id from organizacoes_usuarios ou where ou.organizacao_id = t.organizacao_id);`;
+  const result = await testesABRepository.manager.query(sql);
+
+  return response.json(result);
+
+});
+
+testesABRouter.get('/total', async (request, response) => {
+
+  const testesABRepository = getCustomRepository(TestesABRepository);
+
+  const { usuario_id } = request.query;
+
+  const sql = `select (count(t.*)/2) as "total_TestesAB", sum(tt.acessos) as "total_acessos" from "testesAB" t inner join testes tt on (tt."testeAB_id" = t.id) where ${usuario_id} in ( select ou.usuario_id from organizacoes_usuarios ou where ou.organizacao_id = t.organizacao_id );`;
+  let result = await testesABRepository.manager.query(sql);
+
+  return response.json(result);
+
+});
+
 export default testesABRouter;

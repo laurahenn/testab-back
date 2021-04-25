@@ -51,4 +51,15 @@ testesRouter.delete('/', async (request, response) => {
   }
 });
 
+testesRouter.get('/me', async (request, response) => {
+
+  const testeRepository = getCustomRepository(TestesRepository);
+
+  const { testeAB, identificacao } = request.body;
+
+  const teste = await testeRepository.manager.query(`select tt.identificacao, tt.acessos from testes tt inner join "testesAB" t on(tt."testeAB_id" = t.id) where t.id = ${testeAB} and tt.identificacao = '${identificacao}';`);
+
+  return response.json(teste);
+});
+
 export default testesRouter;

@@ -15,8 +15,6 @@ import Mail from "../mail/mail";
 const usuariosRouter = Router();
 const upload = multer(uploadConfig);
 
-usuariosRouter.use(ensureAuthenticated);
-
 usuariosRouter.get("/", async (request, response) => {
   const usuariosRepository = getCustomRepository(UsuariosRepository);
 
@@ -53,7 +51,7 @@ usuariosRouter.post("/", async (request, response) => {
   }
 });
 
-usuariosRouter.put("/", async (request, response) => {
+usuariosRouter.use(ensureAuthenticated).put("/", async (request, response) => {
   const {
     user_id,
     nome,
@@ -81,7 +79,7 @@ usuariosRouter.put("/", async (request, response) => {
   return response.json(usuario);
 });
 
-usuariosRouter.patch(
+usuariosRouter.use(ensureAuthenticated).patch(
   "/avatar",
   ensureAuthenticated,
   upload.single("foto"),
@@ -101,7 +99,7 @@ usuariosRouter.patch(
   },
 );
 
-usuariosRouter.delete('/', async (request, response) => {
+usuariosRouter.use(ensureAuthenticated).delete('/', async (request, response) => {
   try {
     const { id } = request.body;
 

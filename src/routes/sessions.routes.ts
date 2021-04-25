@@ -6,7 +6,7 @@ const sessionsRouter = Router();
 
 sessionsRouter.post('/', async (request, response) => {
   try {
-      
+
     const { email, senha } = request.body;
 
     const authenticateUser = new AuthenticateUserService();
@@ -17,7 +17,7 @@ sessionsRouter.post('/', async (request, response) => {
     })
 
     return response.json({ user, token });
-    
+
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
