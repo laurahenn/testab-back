@@ -7,3 +7,5 @@ tmp/*
 !tmp/.gitkeep
 
 .DS_Store
+
+ormconfig.json
