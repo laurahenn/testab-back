@@ -34,4 +34,25 @@ equipesRouter.post('/', async (request, response) => {
   }
 });
 
+equipesRouter.delete('/', async (request, response) => {
+  try {
+    const { id } = request.body;
+
+    const equipesRepository = getCustomRepository(EquipesRepository);
+    const equipe = await equipesRepository.findOne({
+      where: { id },
+    });
+
+    if (!equipe) {
+      throw new Error('Equipe não encontrada');
+    }
+
+    await equipesRepository.delete(equipe);
+
+    return response.status(200).json({ sucess: "Equipe deletada com sucesso!" });
+  } catch (err) {
+    return response.status(400).json({ error: err.message });
+  }
+});
+
 export default equipesRouter;

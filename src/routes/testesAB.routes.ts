@@ -15,7 +15,7 @@ testesABRouter.get('/', async (request, response) => {
 
 testesABRouter.post('/', async (request, response) => {
   try {
-    
+
     const { titulo, data_inicio, data_fim, url, ativo, created_at, organizacao_id } = request.body;
 
     const createUser = new CreateTestesABService();
@@ -25,6 +25,27 @@ testesABRouter.post('/', async (request, response) => {
     });
 
     return response.json(usuario);
+  } catch (err) {
+    return response.status(400).json({ error: err.message });
+  }
+});
+
+testesABRouter.delete('/', async (request, response) => {
+  try {
+    const { id } = request.body;
+
+    const testeABRepository = getCustomRepository(TestesABRepository);
+    const testeAB = await testeABRepository.findOne({
+      where: { id },
+    });
+
+    if (!testeAB) {
+      throw new Error('Teste AB não encontrada');
+    }
+
+    await testeABRepository.delete(testeAB);
+
+    return response.status(200).json({ sucess: "Teste AB deletado com sucesso!" });
   } catch (err) {
     return response.status(400).json({ error: err.message });
   }

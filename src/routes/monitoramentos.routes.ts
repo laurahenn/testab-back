@@ -15,7 +15,7 @@ monitoramentosRouter.get('/', async (request, response) => {
 
 monitoramentosRouter.post('/', async (request, response) => {
   try {
-    
+
     const { id_monitorado, formulario, formulario_sucesso, testeAB_id } = request.body;
 
     const createUser = new CreateMonitoramentosService();
@@ -25,6 +25,27 @@ monitoramentosRouter.post('/', async (request, response) => {
     });
 
     return response.json(usuario);
+  } catch (err) {
+    return response.status(400).json({ error: err.message });
+  }
+});
+
+monitoramentosRouter.delete('/', async (request, response) => {
+  try {
+    const { id } = request.body;
+
+    const monitoramentoRepository = getCustomRepository(MonitoramentosRepository);
+    const monitoramento = await monitoramentoRepository.findOne({
+      where: { id },
+    });
+
+    if (!monitoramento) {
+      throw new Error('Monitoramento não encontrado');
+    }
+
+    await monitoramentoRepository.delete(monitoramento);
+
+    return response.status(200).json({ sucess: "Monitoramento deletado com sucesso!" });
   } catch (err) {
     return response.status(400).json({ error: err.message });
   }

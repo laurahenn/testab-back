@@ -22,4 +22,25 @@ organizacoesusuariosRouter.post('/', async (request, response) => {
   return response.json(organizacao_usuario);
 });
 
+organizacoesusuariosRouter.delete('/', async (request, response) => {
+  try {
+    const { id } = request.body;
+
+    const organizacaousuarioRepository = getCustomRepository(OrganizacoesUsuariosRepository);
+    const organizacao_usuario = await organizacaousuarioRepository.findOne({
+      where: { id },
+    });
+
+    if (!organizacao_usuario) {
+      throw new Error('Usuário da organização não encontrado');
+    }
+
+    await organizacaousuarioRepository.delete(organizacao_usuario);
+
+    return response.status(200).json({ sucess: "Usuário da organização deletado com sucesso!" });
+  } catch (err) {
+    return response.status(400).json({ error: err.message });
+  }
+});
+
 export default organizacoesusuariosRouter;

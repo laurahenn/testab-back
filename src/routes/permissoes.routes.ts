@@ -19,8 +19,29 @@ permissoesRouter.post('/', async (request, response) => {
 
   const createPermissao = new CreatePermissoesService();
   const permissao = await createPermissao.execute({ titulo, admin });
-  
+
   return response.json(permissao);
+});
+
+permissoesRouter.delete('/', async (request, response) => {
+  try {
+    const { id } = request.body;
+
+    const permissoesRepository = getCustomRepository(PermissoesRepository);
+    const permissao = await permissoesRepository.findOne({
+      where: { id },
+    });
+
+    if (!permissao) {
+      throw new Error('Permissão não encontrada');
+    }
+
+    await permissoesRepository.delete(permissao);
+
+    return response.status(200).json({ sucess: "Permissão deletada com sucesso!" });
+  } catch (err) {
+    return response.status(400).json({ error: err.message });
+  }
 });
 
 export default permissoesRouter;

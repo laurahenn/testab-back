@@ -22,4 +22,25 @@ organizacoesRouter.post('/', async (request, response) => {
   return response.json(organizacao);
 });
 
+organizacoesRouter.delete('/', async (request, response) => {
+  try {
+    const { id } = request.body;
+
+    const organizacaoRepository = getCustomRepository(OrganizacoesRepository);
+    const organizacao = await organizacaoRepository.findOne({
+      where: { id },
+    });
+
+    if (!organizacao) {
+      throw new Error('Organização não encontrado');
+    }
+
+    await organizacaoRepository.delete(organizacao);
+
+    return response.status(200).json({ sucess: "Organização deletada com sucesso!" });
+  } catch (err) {
+    return response.status(400).json({ error: err.message });
+  }
+});
+
 export default organizacoesRouter;

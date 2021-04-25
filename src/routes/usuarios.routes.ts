@@ -101,4 +101,26 @@ usuariosRouter.patch(
   },
 );
 
+usuariosRouter.delete('/', async (request, response) => {
+  try {
+    const { id } = request.body;
+
+    const usuariosRepository = getCustomRepository(UsuariosRepository);
+    const usuario = await usuariosRepository.findOne({
+      where: { id },
+    });
+
+    if (!usuario) {
+      throw new Error('Usuário não encontrado');
+    }
+
+    usuario.ativo = false;
+    await usuariosRepository.save(usuario);
+
+    return response.status(200).json({ sucess: "Usuário desativado com sucesso!", usuario });
+  } catch (err) {
+    return response.status(400).json({ error: err.message });
+  }
+});
+
 export default usuariosRouter;
